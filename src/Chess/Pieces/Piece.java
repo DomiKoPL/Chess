@@ -56,7 +56,8 @@ public class Piece {
                 Y-= imageView.getScene().getWindow().getY();
                 Y-= imageView.getScene().getY();
 
-                int newX = X - X % 128, newY = Y - Y % 128;
+                int width = (int)(Game.getInstance().getTileSize() * Game.getInstance().getTileScale());
+                int newX = X - X % width, newY = Y - Y % width;
                 imageView.setX(newX);
                 imageView.setY(newY);
             }
@@ -67,12 +68,15 @@ public class Piece {
                 Game.getInstance().setPieceSelected(false);
                 selected = false;
 
-                byte newX = (byte) (imageView.getX() / 128), newY = (byte) (imageView.getY() / 128);
+                int width = (int)(Game.getInstance().getTileSize() * Game.getInstance().getTileScale());
+                byte newX = (byte) (imageView.getX() / width), newY = (byte) (imageView.getY() / width);
 
                 if(newX < 0 || newX >= 8 || newY < 0 || newY >= 8){
                     updateAvailableMoves(false);
-                    imageView.setX(this.x * 128);
-                    imageView.setY(this.y * 128);
+                    imageView.setX(this.x * width);
+                    imageView.setY(this.y * width);
+                    imageView.setTranslateX(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
+                    imageView.setTranslateY(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
                     return;
                 }
 
@@ -84,8 +88,10 @@ public class Piece {
                     Game.getInstance().setWhiteMove(!this.isWhite());
                     move(newX, newY);
                 } else {
-                    imageView.setX(this.x * 128);
-                    imageView.setY(this.y * 128);
+                    imageView.setX(this.x * width);
+                    imageView.setY(this.y * width);
+                    imageView.setTranslateX(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
+                    imageView.setTranslateY(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
                 }
 
             }

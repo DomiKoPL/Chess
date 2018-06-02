@@ -1,5 +1,6 @@
 package Chess;
 
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,14 +30,25 @@ public class Game {
         return INSTANCE;
     }
 
+    private int tileSize = 128;
+    private double tileScale = 0.5d;
+
     public void start(Stage stage){
-        stage.setScene(new Scene(Board.getInstance().makeNewBoard(),128 * 8 - 10, 128 * 8));
+        stage.setScene(new Scene(Board.getInstance().makeNewBoard(),tileSize * tileScale * 8 - 10, tileSize * tileScale * 8 - 10));
         stage.setResizable(false);
         stage.show();
     }
 
     private boolean pieceSelected;
     private boolean whiteMove = true;
+
+    public int getTileSize(){
+        return tileSize;
+    }
+
+    public double getTileScale(){
+        return tileScale;
+    }
 
     public void setPieceSelected(boolean pieceSelected) {
         this.pieceSelected = pieceSelected;

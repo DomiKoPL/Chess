@@ -1,6 +1,7 @@
 package Chess;
 
 import Chess.Pieces.*;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +26,16 @@ public class Board {
     private Spot[][] spots = new Spot[8][8];
     private String[] names = {"pawn", "rook","knight","bishop","king","queen"};
     Pane root = new Pane();
+
+    private void setupImage(ImageView imageView, int x , int y){
+        double width = Game.getInstance().getTileSize() * Game.getInstance().getTileScale();
+        imageView.setX(x * width);
+        imageView.setY(y * width);
+        imageView.setScaleX(Game.getInstance().getTileScale());
+        imageView.setTranslateX(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
+        imageView.setScaleY(Game.getInstance().getTileScale());
+        imageView.setTranslateY(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
+    }
 
     public Parent makeNewBoard(){
 
@@ -51,12 +62,9 @@ public class Board {
                 ImageView canMove = new ImageView(imageCanMove);
                 ImageView canBeat = new ImageView(imageCanBeat);
                 this.spots[i][j] = new Spot(imageView,canMove,canBeat);
-                canMove.setX(j * 128);
-                canMove.setY(i * 128);
-                canBeat.setX(j * 128);
-                canBeat.setY(i * 128);
-                imageView.setX(j * 128);
-                imageView.setY(i * 128);
+                setupImage(canMove,j,i);
+                setupImage(canBeat,j,i);
+                setupImage(imageView,j,i);
                 root.getChildren().addAll(imageView,canMove,canBeat);
                 dark = !dark;
             }
@@ -78,8 +86,7 @@ public class Board {
                         y = (byte)(col == 0 ? 1 : 6);
                         for(byte x = 0 ; x < 8; x++){
                             ImageView imageView = new ImageView(pieceImage);
-                            imageView.setX(x * 128);
-                            imageView.setY(y * 128);
+                            setupImage(imageView,x,y);
                             piece = new Pawn(x,y,imageView,white);
                             spots[y][x].occupySpot(piece);
                             root.getChildren().add(imageView);
@@ -88,8 +95,7 @@ public class Board {
                     case 1:
                         for(byte x = 0 ; x < 8; x += 7){
                             ImageView imageView = new ImageView(pieceImage);
-                            imageView.setX(x * 128);
-                            imageView.setY(y * 128);
+                            setupImage(imageView,x,y);
                             piece = new Rook(x,y,imageView,white);
                             spots[y][x].occupySpot(piece);
                             root.getChildren().add(imageView);
@@ -98,8 +104,7 @@ public class Board {
                     case 2:
                         for(byte x = 1 ; x < 7; x += 5){
                             ImageView imageView = new ImageView(pieceImage);
-                            imageView.setX(x * 128);
-                            imageView.setY(y * 128);
+                            setupImage(imageView,x,y);
                             piece = new Knight(x,y,imageView,white);
                             spots[y][x].occupySpot(piece);
                             root.getChildren().add(imageView);
@@ -108,8 +113,7 @@ public class Board {
                     case 3:
                         for(byte x = 2 ; x < 6; x += 3){
                             ImageView imageView = new ImageView(pieceImage);
-                            imageView.setX(x * 128);
-                            imageView.setY(y * 128);
+                            setupImage(imageView,x,y);
                             piece = new Bishop(x,y,imageView,white);
                             spots[y][x].occupySpot(piece);
                             root.getChildren().add(imageView);
@@ -118,8 +122,7 @@ public class Board {
                     case 4:
                         for(byte x = 4 ; x < 5; x++){
                             ImageView imageView = new ImageView(pieceImage);
-                            imageView.setX(x * 128);
-                            imageView.setY(y * 128);
+                            setupImage(imageView,x,y);
                             piece = new King(x,y,imageView,white);
                             spots[y][x].occupySpot(piece);
                             root.getChildren().add(imageView);
@@ -128,8 +131,7 @@ public class Board {
                     case 5:
                         for(byte x = 3 ; x < 4; x++){
                             ImageView imageView = new ImageView(pieceImage);
-                            imageView.setX(x * 128);
-                            imageView.setY(y * 128);
+                            setupImage(imageView,x,y);
                             piece = new Queen(x,y,imageView,white);
                             spots[y][x].occupySpot(piece);
                             root.getChildren().add(imageView);
