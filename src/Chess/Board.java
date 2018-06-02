@@ -3,16 +3,18 @@ package Chess;
 import Chess.Pieces.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
+import java.awt.*;
 import java.io.InputStream;
 
 public class Board {
@@ -36,7 +38,7 @@ public class Board {
     public void setupImage(ImageView imageView, int x , int y){
         double width = Game.getInstance().getTileSize() * Game.getInstance().getTileScale();
         imageView.setX(x * width);
-        imageView.setY(y * width);
+        imageView.setY(y * width + 15);
         imageView.setScaleX(Game.getInstance().getTileScale());
         imageView.setTranslateX(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
         imageView.setScaleY(Game.getInstance().getTileScale());
@@ -156,7 +158,7 @@ public class Board {
 
                 System.out.println(width);
                 stage.setWidth(width);
-                stage.setHeight(width + 23);
+                stage.setHeight(width + 23 + 15);
 
                 for (int i = 0 ; i < 8; i++){
                     for(int j = 0 ; j < 8; j++){
@@ -171,9 +173,11 @@ public class Board {
 
         double width = Game.getInstance().getTileScale() * Game.getInstance().getTileSize() * 8 +  6;
 
+        root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY,Insets.EMPTY)));
         stage.setScene(new Scene(root,width,width));
+
         stage.setWidth(width);
-        stage.setHeight(width + 23);
+        stage.setHeight(width + 23 + 15);
     }
 
     public Spot getSpot(byte x, byte y){

@@ -62,7 +62,7 @@ public class Piece {
 
                 double width = Game.getInstance().getTileSize() * Game.getInstance().getTileScale();
 
-                double newX = X - X % width, newY = Y - Y % width;
+                double newX = X - X % width, newY = Y - Y % width + 15;
                 imageView.setX(newX);
                 imageView.setY(newY);
             }
@@ -79,7 +79,7 @@ public class Piece {
                 if(newX < 0 || newX >= 8 || newY < 0 || newY >= 8){
                     updateAvailableMoves(false);
                     imageView.setX(this.x * width);
-                    imageView.setY(this.y * width);
+                    imageView.setY(this.y * width + 15);
                     imageView.setTranslateX(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
                     imageView.setTranslateY(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
                     return;
@@ -94,7 +94,7 @@ public class Piece {
                     move(newX, newY);
                 } else {
                     imageView.setX(this.x * width);
-                    imageView.setY(this.y * width);
+                    imageView.setY(this.y * width + 15);
                     imageView.setTranslateX(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
                     imageView.setTranslateY(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
                 }
