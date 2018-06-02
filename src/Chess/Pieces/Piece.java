@@ -33,6 +33,10 @@ public class Piece {
         setReactions();
     }
 
+    public void updateScale(int x, int y){
+        Board.getInstance().setupImage(imageView,x,y);
+    }
+
     protected void setReactions(){
 
         imageView.setOnMouseDragged(e -> {
@@ -56,8 +60,9 @@ public class Piece {
                 Y-= imageView.getScene().getWindow().getY();
                 Y-= imageView.getScene().getY();
 
-                int width = (int)(Game.getInstance().getTileSize() * Game.getInstance().getTileScale());
-                int newX = X - X % width, newY = Y - Y % width;
+                double width = Game.getInstance().getTileSize() * Game.getInstance().getTileScale();
+
+                double newX = X - X % width, newY = Y - Y % width;
                 imageView.setX(newX);
                 imageView.setY(newY);
             }
@@ -68,7 +73,7 @@ public class Piece {
                 Game.getInstance().setPieceSelected(false);
                 selected = false;
 
-                int width = (int)(Game.getInstance().getTileSize() * Game.getInstance().getTileScale());
+                double width = Game.getInstance().getTileSize() * Game.getInstance().getTileScale();
                 byte newX = (byte) (imageView.getX() / width), newY = (byte) (imageView.getY() / width);
 
                 if(newX < 0 || newX >= 8 || newY < 0 || newY >= 8){

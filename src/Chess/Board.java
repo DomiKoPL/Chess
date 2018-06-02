@@ -1,11 +1,17 @@
 package Chess;
 
 import Chess.Pieces.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.InputStream;
 
@@ -27,7 +33,7 @@ public class Board {
     private String[] names = {"pawn", "rook","knight","bishop","king","queen"};
     Pane root = new Pane();
 
-    private void setupImage(ImageView imageView, int x , int y){
+    public void setupImage(ImageView imageView, int x , int y){
         double width = Game.getInstance().getTileSize() * Game.getInstance().getTileScale();
         imageView.setX(x * width);
         imageView.setY(y * width);
@@ -37,8 +43,7 @@ public class Board {
         imageView.setTranslateY(-Game.getInstance().getTileSize()  * (1 - Game.getInstance().getTileScale() ) / 2);
     }
 
-    public Parent makeNewBoard(){
-
+    public void makeNewBoard(Stage stage){
         InputStream file = this.getClass().getResourceAsStream("/Images/PNGs/With Shadow/128px/square brown dark_png_shadow_128px.png");
         Image image = new Image(file);
 
@@ -141,7 +146,34 @@ public class Board {
             }
         }
 
-        return root;
+        final Slider slider = new Slider(0.2,1,0.5);
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov
+                    , Number oldValue, Number newValue) {
+                Game.getInstance().setTileScale(newValue.doubleValue());
+                double width = Game.getInstance().getTileScale() * Game.getInstance().getTileSize() * 8 + 6;
+
+                System.out.println(width);
+                stage.setWidth(width);
+                stage.setHeight(width + 23);
+
+                for (int i = 0 ; i < 8; i++){
+                    for(int j = 0 ; j < 8; j++){
+                        spots[i][j].updateScale(j,i);
+                    }
+                }
+            }
+        });
+
+        GridPane.setConstraints(slider,1,1);
+        root.getChildren().add(slider);
+
+        double width = Game.getInstance().getTileScale() * Game.getInstance().getTileSize() * 8 +  6;
+
+        stage.setScene(new Scene(root,width,width));
+        stage.setWidth(width);
+        stage.setHeight(width + 23);
     }
 
     public Spot getSpot(byte x, byte y){

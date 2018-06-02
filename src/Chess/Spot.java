@@ -22,6 +22,15 @@ public class Spot {
         canMove.setVisible(false);
     }
 
+    public void updateScale(int x, int y){
+        Board.getInstance().setupImage(boardImage,x,y);
+        Board.getInstance().setupImage(canMove,x,y);
+        Board.getInstance().setupImage(canBeat,x,y);
+        if(piece != null){
+            piece.updateScale(x,y);
+        }
+    }
+
     public void clearSpot(){
         piece = null;
     }

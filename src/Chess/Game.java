@@ -34,7 +34,7 @@ public class Game {
     private double tileScale = 0.5d;
 
     public void start(Stage stage){
-        stage.setScene(new Scene(Board.getInstance().makeNewBoard(),tileSize * tileScale * 8 - 10, tileSize * tileScale * 8 - 10));
+        Board.getInstance().makeNewBoard(stage);
         stage.setResizable(false);
         stage.show();
     }
@@ -48,6 +48,10 @@ public class Game {
 
     public double getTileScale(){
         return tileScale;
+    }
+
+    public void setTileScale(double tileScale){
+        this.tileScale = tileScale;
     }
 
     public void setPieceSelected(boolean pieceSelected) {
