@@ -35,7 +35,6 @@ public class Game {
 
     public void start(Stage stage){
         Board.getInstance().makeNewBoard(stage);
-        stage.setResizable(false);
         stage.show();
     }
 

@@ -156,7 +156,6 @@ public class Board {
                 Game.getInstance().setTileScale(newValue.doubleValue());
                 double width = Game.getInstance().getTileScale() * Game.getInstance().getTileSize() * 8 + 6;
 
-                System.out.println(width);
                 stage.setWidth(width);
                 stage.setHeight(width + 23 + 15);
 
@@ -178,6 +177,7 @@ public class Board {
 
         stage.setWidth(width);
         stage.setHeight(width + 23 + 15);
+        stage.setResizable(false);
     }
 
     public Spot getSpot(byte x, byte y){
